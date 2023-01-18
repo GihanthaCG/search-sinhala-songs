@@ -1,0 +1,70 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!-- <link href="main.css" rel="stylesheet"> -->
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<!-- <link href="css/main.css" rel="stylesheet" /> -->
+
+<html>
+    <body>
+        {% if hits %}
+        <hgroup class="mb20">
+            <h1>Search Results</h1>
+            <h2 class="lead" id="results"><strong class="text-danger">{{ num_results }}</strong> Results were found for the search <strong class="text-danger"></strong></h2>
+            <h2 class="lead" id="results"> About <strong class="text-danger">({{  time  }}ms)</strong></h2>
+        </hgroup>
+
+
+        <section id='song_section' class="col-md-8">
+            {% for hit in hits %}
+                <article class="search-result row">
+                    <div class="col-md-12">
+                        <h3><a href="#" title="">{{ hit._source.song_title }}</a></h3>
+                        <ul class="meta-search">
+                            <li><i class="glyphicon glyphicon-tags"></i> <span>Song Title: {{ hit._source.song_title  }} </span></li>
+                            <li><i class="glyphicon glyphicon-tags"></i> <span>Lyricist: {{ hit._source.lyricist  }} </span></li>
+                            <li><i class="glyphicon glyphicon-tags"></i> <span>Singer: {{ hit._source.singer }}</span></li>
+                            <li><i class="glyphicon glyphicon-tags"></i> <span>Album: {{ hit._source.album }}</span></li>
+                            <li><i class="glyphicon glyphicon-tags"></i> <span>Year: {{ hit._source.year  }} </span></li>
+                            <li><i class="glyphicon glyphicon-tags"></i> <span>Lyrics: </span></li>
+                            <p style="white-space: pre-line">{{ hit._source.song_lyrics }}</p>
+                        </ul>
+                        <h5>Metaphors</h5>
+                        {% for metaphor in hit._source.metaphors %}
+                        <article class="search-result row">
+                            <div class="col-md-12">
+                                <ul class="meta-search">
+                                    <li><i class="glyphicon glyphicon-tags"></i> <span>Metaphor: {{ metaphor.metaphor  }} </span></li>
+                                    <li><i class="glyphicon glyphicon-tags"></i> <span>Meaning: {{ metaphor.meaning  }} </span></li>
+                                    <li><i class="glyphicon glyphicon-tags"></i> <span>Source Domain: {{ metaphor.source_domain  }} </span></li>
+                                    <li><i class="glyphicon glyphicon-tags"></i> <span>Target_Domain: {{ metaphor.target_domain  }} </span></li>
+                                </ul>
+                            </div>
+                        </article>    
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                    <span class="clearfix borda"></span>
+                </article>
+                {% endfor %}
+        </section>
+
+        {% else %}
+        {% if init %}
+            <hgroup class="mb20">
+            <h1>Song Search Engine</h1>
+            <h2 class="lead">Please enter the search query in the box</strong></h2>
+        </hgroup>
+        {% else %}
+        <hgroup class="mb20">
+            <h1>Search Results</h1>
+            <h2 class="lead"><strong class="text-danger">0</strong> Results were found for the search<strong class="text-danger"></strong></h2>
+        </hgroup>
+        {% endif %}
+    {% endif %}
+
+    </body>
+    
+
+</html>
